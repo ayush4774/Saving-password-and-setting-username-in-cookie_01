@@ -14,10 +14,23 @@ document.addEventListener('DOMContentLoaded', function() {
       name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
   }
 
-  // 1. Get the value of the 'count' cookie
-  // 2. If the cookie exists, increment the value and update the cookie
-  // 3. If the cookie does not exist, create it and set the value to 1
-  // 4. Display the count on the webpage
+  // Get the initial count from the cookie or set it to 0 if it doesn't exist
+  let count = getCookie('count');
+  if (!count) {
+    count = 0; // If count doesn't exist, initialize it to 0
+    setCookie('count', count, 7); // Create the cookie with a 7-day expiration
+  } else {
+    count = parseInt(count);
+  }
 
-  // your code here
+  // Set the initial count value in the span element
+  const countSpan = document.getElementById('count');
+  countSpan.textContent = count; // Set the count value in the <span id="count">
+
+  // Increment the count when the button is clicked
+  document.querySelector('button').addEventListener('click', function() {
+    count++;
+    setCookie('count', count, 7); // Update the count cookie
+    countSpan.textContent = count; // Update the count in the span element
+  });
 });
